@@ -1,31 +1,38 @@
-var Game_Over = {
+import {Game} from './game.js'
 
-    preload: function () {
+class Game_Over extends Game {
+    constructor(score) {
+        super(score);
+    }
+
+    preload() {
         
-        game.load.image('gameover', './assets/images/gameover.png');
-    },
+        this.game.load.image('gameover', './assets/images/gameover.png');
+    }
 
-    create: function () {
+    create() {
         
         this.add.button(0, 0, 'gameover', this.startGame, this);
 
-        game.add.text(235, 310, "LAST SCORE", { font: "bold 16px sans-serif", fill: "#fff", align: "center"});
-        game.add.text(344, 308, score.toString(), { font: "bold 20px sans-serif", fill: "#fff", align: "center" });
+        this.game.add.text(235, 310, "LAST SCORE", { font: "bold 16px sans-serif", fill: "#fff", align: "center"});
+        this.game.add.text(344, 308, this.score.toString(), { font: "bold 20px sans-serif", fill: "#fff", align: "center" });
         
 
         // Збереження рекорду в локалсторадж
         let storagedScore = localStorage.getItem('maxApple');
         if (!storagedScore) {
-            localStorage.setItem('maxApple', score.toString())
-        } else if(storagedScore < score){
+            localStorage.setItem('maxApple', this.score.toString())
+        } else if(storagedScore < this.score){
             localStorage.removeItem('maxApple');
-            localStorage.setItem('maxApple', score.toString());
+            localStorage.setItem('maxApple', this.score.toString());
         }
-    },
+    }
 
-    startGame: function () {
+    startGame() {
 
         this.state.start('Game');
     }
 
 };
+
+export { Game_Over };
