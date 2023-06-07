@@ -1,13 +1,17 @@
-let game;
 import { Menu } from './menu.js';
 import { Game } from './game.js';
 import { Game_Over } from './game_over.js';
 
-game = new Phaser.Game(600, 450, Phaser.AUTO, '');
+let sceneToPlay = new Game();
+let sceneToFinish = new Game_Over();
+let sceneToBegin = new Menu();
 
-game.state.add('Menu', Menu);
-game.state.add('Game', Game);
-game.state.add('Game_Over', Game_Over);
+const config = {
+  type: Phaser.AUTO,
+  width: 600,
+  height: 450,
+  scene: [sceneToBegin, sceneToPlay, sceneToFinish]
+};
 
-game.state.start('Menu');
+const game = new Phaser.Game(config);
 

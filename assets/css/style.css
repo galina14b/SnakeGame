@@ -2,9 +2,12 @@ body {
   background-image: url(../images/background.png);
   background-size: cover;
   background-repeat: no-repeat;
+  max-width: 1440px;
+  width: 100%;
 }
 
 canvas {
   margin: 100px auto;
-  border: solid 2px black;
+  display: block;
+  border: solid 2px rgb(63, 11, 236);
 }

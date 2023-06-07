@@ -1,4 +1,4 @@
-class Game {
+class Game extends Phaser.Scene {
     snake = [];                     
     apple = {};                     
     squareSize = 15;                
@@ -15,10 +15,14 @@ class Game {
     textStyleValue;
     maxAppleValue;
 
+    constructor() {
+    super("Game");
+  }
+
     // Зображення "змійки", "яблука"
     preload() {
-        this.game.load.image('snake', './assets/images/blockSnake.png');
-        this.game.load.image('apple', './assets/images/blockApple.png');
+        this.load.image('snake', './assets/images/blockSnake.png');
+        this.load.image('apple', './assets/images/blockApple.png');
         
     }
 
@@ -26,43 +30,40 @@ class Game {
         
       // Створення "змійки"  
       for(let i = 0; i < 10; i++){
-        this.snake[i] = this.game.add.sprite(150+i*this.squareSize, 150, 'snake'); 
+        this.snake[i] = this.add.sprite(150+i*this.squareSize, 150, 'snake'); 
       }
 
       // Створення "яблука"
       this.generateApple();
 
-      this.game.stage.backgroundColor = '#A024B6';
       this.textStyleKey = { font: "bold 14px sans-serif", fill: "#1ECEF4", align: "center" };
       this.textStyleValue = { font: "bold 18px sans-serif", fill: "#fff", align: "center" };
 
       // Кількість "яблук"
-        this.game.add.text(30, 20, "Apple score:", this.textStyleKey);
-        this.scoreTextValue = this.game.add.text(125, 18, this.score.toString(), this.textStyleValue);
+        this.add.text(30, 20, "Apple score:", this.textStyleKey);
+        this.scoreTextValue = this.add.text(125, 18, this.score.toString(), this.textStyleValue);
         
       // Рекорд "яблук"
-        this.game.add.text(255, 20, "Record score:", this.textStyleKey);
+        this.add.text(255, 20, "Record score:", this.textStyleKey);
         let maxApple = localStorage.getItem('maxApple');
         if (!maxApple) {
-            this.maxAppleValue = this.game.add.text(360, 18, '0', this.textStyleValue);
+            this.maxAppleValue = this.add.text(360, 18, '0', this.textStyleValue);
         } else {
-            this.maxAppleValue = this.game.add.text(360, 18, this.maxApple, this.textStyleValue);
+            this.maxAppleValue = this.add.text(360, 18, maxApple, this.textStyleValue);
         }
         
       // Швидкість
-      this.game.add.text(475, 20, "Speed:", this.textStyleKey);
-      this.speedTextValue = this.game.add.text(530, 18, this.speed.toString(), this.textStyleValue);
+      this.add.text(475, 20, "Speed:", this.textStyleKey);
+      this.speedTextValue = this.add.text(530, 18, this.speed.toString(), this.textStyleValue);
         
-      this.cursors = this.game.input.keyboard.createCursorKeys();
+      this.cursors = this.input.keyboard.createCursorKeys();
 
     }
 
     update() {
 
       // "Прослуховування" натиснутих кнопок  
-        console.log(this.cursors);
-        console.log(this.direction);
-        console.log(this.newDirection);
+        
         
       if (this.cursors.right.isDown && this.direction!='left')
       {
@@ -129,7 +130,7 @@ class Game {
     };
         
     if(this.addNew){
-        this.snake.unshift(this.game.add.sprite(oldLastCellx, oldLastCelly, 'snake'));
+        this.snake.unshift(this.add.sprite(oldLastCellx, oldLastCelly, 'snake'));
         this.addNew = false;
     }
 
@@ -152,7 +153,7 @@ class Game {
       let randomX = Math.floor( Math.random() * 40 ) * this.squareSize,
           randomY = Math.floor(Math.random() * 20 ) * this.squareSize;
 
-      this.apple = this.game.add.sprite(randomX, randomY, 'apple');
+      this.apple = this.add.sprite(randomX, randomY, 'apple');
     }
     
     appleCollision() {
@@ -179,8 +180,8 @@ class Game {
 
     for(let i = 0; i < this.snake.length - 1; i++){
         if(head.x == this.snake[i].x && head.y == this.snake[i].y){
-
-            this.game.state.start('Game_Over');
+            localStorage.setItem('applesInCurrentGame', this.score)
+            this.scene.start('End');
         }
     }
 

@@ -1,19 +1,21 @@
-class Menu {
+class Menu extends Phaser.Scene {
+
+    constructor() {
+    super("Menu");
+  }
 
     preload() {
         
-        this.game.load.image('menu', './assets/images/menu.png');
+        this.load.image('menu', './assets/images/menu.png');
     }
 
     create() {
+
+        this.add.image(300, 225, 'menu')
         
-        this.add.button(0, 0, 'menu', this.startGame, this);
-    }
-
-    startGame() {
-
-        this.state.start('Game');
-
+        this.input.on("pointerdown", (pointer) => {
+            this.scene.start("Game");
+        });
     }
 };
 
