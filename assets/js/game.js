@@ -180,8 +180,8 @@ class Game extends Phaser.Scene {
 
     for(let i = 0; i < this.snake.length - 1; i++){
         if(head.x == this.snake[i].x && head.y == this.snake[i].y){
-            localStorage.setItem('applesInCurrentGame', this.score)
-            this.scene.start('End');
+            // localStorage.setItem('applesInCurrentGame', this.score)
+            this.scene.start("End", { score: this.score });
         }
     }
 

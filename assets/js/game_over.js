@@ -1,9 +1,8 @@
 // Кількість яблук в поточній грі
-        let currentScore = localStorage.getItem('applesInCurrentGame');
 
-class Game_Over extends Phaser.Scene {
+class GameOver extends Phaser.Scene {
     constructor() {
-    super("End");
+        super("End");
   }
 
     preload() {
@@ -17,17 +16,17 @@ class Game_Over extends Phaser.Scene {
 
         
         this.add.text(235, 310, "LAST SCORE", { font: "bold 16px sans-serif", fill: "#fff", align: "center"});
-        this.add.text(344, 308, currentScore, { font: "bold 20px sans-serif", fill: "#fff", align: "center" });
+        this.add.text(344, 308, this.score, { font: "bold 20px sans-serif", fill: "#fff", align: "center" });
         
 
 
         // Збереження рекорду в локалсторадж
         let storagedScore = localStorage.getItem('maxApple');
         if (!storagedScore) {
-            localStorage.setItem('maxApple', currentScore)
-        } else if(storagedScore < currentScore){
+            localStorage.setItem('maxApple', this.score)
+        } else if(storagedScore < this.score){
             localStorage.removeItem('maxApple');
-            localStorage.setItem('maxApple', currentScore);
+            localStorage.setItem('maxApple', this.score);
         }
 
         this.input.on("pointerdown", (pointer) => {
@@ -37,4 +36,4 @@ class Game_Over extends Phaser.Scene {
 
 };
 
-export { Game_Over };
+export { GameOver };
