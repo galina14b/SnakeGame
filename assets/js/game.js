@@ -23,7 +23,8 @@ class Game extends Phaser.Scene {
     preload() {
         this.load.image('snake', './assets/images/blockSnake.png');
         this.load.image('apple', './assets/images/blockApple.png');
-        
+        this.score = 0;
+        this.speed = 0;
     }
 
     create() {               
@@ -180,7 +181,6 @@ class Game extends Phaser.Scene {
 
     for(let i = 0; i < this.snake.length - 1; i++){
         if(head.x == this.snake[i].x && head.y == this.snake[i].y){
-            // localStorage.setItem('applesInCurrentGame', this.score)
             this.scene.start("End", { score: this.score });
         }
     }

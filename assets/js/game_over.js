@@ -10,6 +10,10 @@ class GameOver extends Phaser.Scene {
         this.load.image('gameover', './assets/images/gameover.png');
     }
 
+    init(data) {
+        this.score = data.score;
+    }
+
     create() {
 
         this.add.image(300, 225, 'gameover')
